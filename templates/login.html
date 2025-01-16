@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %} Login Page{% endblock title %}
+
+{% block body %}
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+    <form method='POST' action="{{url_for('login')}}" class="p-4 w-50 border border-2 rounded-3">
+        <div class="mb-3">
+          <input type="text" class="form-control" name="username" placeholder="username" required>
+        </div>
+        <div class="mb-3">
+          <input type="password" class="form-control" name="password" placeholder="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock body %}
