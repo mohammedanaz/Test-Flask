@@ -5,15 +5,11 @@
 {% block body %}
 
 <ul>
-    {% for x in value %}
-    <li {% if x == 3 %}style="color: red"{% endif %}>
-        {{x}}
+    {% for person in persons %}
+    <li>
+        {{person}} - {{person.age}}
     </li>
     {% endfor %}
-    <br>
-    <a href="{{url_for('login')}}">
-        Login Page
-    </a>
 </ul>
 
 {% endblock body %}

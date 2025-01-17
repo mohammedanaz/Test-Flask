@@ -1,28 +1,16 @@
-from flask import Flask, request, render_template, request, redirect, url_for
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
-app = Flask(__name__, template_folder='templates')
+db = SQLAlchemy()
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    value = [1, 2, 3, 4, 5]
-    return render_template('index.html', value=value)
+def create_app():
+    app = Flask(__name__, template_folder='templates')
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///testdb.db'
+    db.init_app(app)
 
+    from routes import register_routes
+    register_routes(app, db)
+    migrate = Migrate(app, db)
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == "POST":
-        print('request.form - ', request.form)
-        username = request.form.get('username')
-        password = request.form.get('password')
-
-        return redirect(url_for('dashboard', username=username) )
-    return render_template('login.html')
-
-@app.route('/dashboard', methods=['GET',])
-def dashboard():
-    username = request.args.get('username')
-    return render_template('dashboard.html', username=username)
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    return app
